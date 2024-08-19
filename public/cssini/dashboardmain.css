@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    padding: 15px 30px;
+    background-color: rgb(81, 17, 101);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.side-bar-left {
+    width: 250px;
+    min-height: 200vh;
+    transition: 500ms width;
+    background-color: rgb(43, 13, 89);
+}
+
+#navbar {
+    display: inline-block;
+    margin-left: 1000px;
+    transition: 200ms color;
+    color: white;
+}
+
+.user-p .perfil {
+    width: 50%;
+    border-radius: 50%;
+}
+
+.user-p {
+    text-align: center;
+    padding-left: 15px;
+    padding-top: 17px;
+}
+
+.side-bar-left ul {
+    margin-left: 15px;
+    list-style: none;
+}
+
+.side-bar-left ul li {
+    padding-left: 15px;
+    padding: 15px;
+    text-overflow: ellipsis;
+    transition: 500ms background;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.side-bar-left ul li a {
+    color: rgb(223, 220, 223);
+    text-decoration: none;
+}
+
+.side-bar-left ul li:hover {
+    background-color: rgb(181, 145, 167);
+}
+
+.side-bar-left ul li a i {
+    display: inline-block;
+    padding: 15px;
+    cursor: pointer;
+    color: rgb(152, 33, 140);
+}
+
+.u-name {
+    padding-left: 15px;
+    color: white;
+}
+
+.u-name b {
+    color: rgb(152, 63, 193);
+    padding: 10px;
+}
+
+#checkbox {
+    display: none;
+}
+
+#checkbox:checked~.body .side-bar-left {
+    width: 100px;
+}
+
+#checkbox:checked~.body .side-bar-left .user-p {
+    visibility: hidden;
+}
+
+#checkbox:checked~.body .side-bar-left a span {
+    display: none;
+}

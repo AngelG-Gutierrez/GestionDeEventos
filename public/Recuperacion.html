@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/cssini/style3.css">
+    <title>Recuperar cuenta</title>
+</head>
+
+<body>
+    <div class="formulario">
+        <h1>Recupera tu cuenta</h1>
+        <h5>Para poder recuperar tu cuenta ingresa tu correo electrónico, <br> en unos momentos le llegará la solicitud a su correo</h5>
+        <div>
+            <div class="input-group">
+                <form method="post" action="enviar_email.php">
+                    <!--PHP script para enviar el correo -->
+                    <div class="correo">
+                        <input type="input" id="correo" name="correo" required>
+                        <label for="correo">Ingresa tu correo electrónico</label>
+                    </div>
+                    <center>
+                        <input type="submit" name="submit" value="Solicitar cambio">
+                        <div class="Yacuenta">¿Ya tienes una cuenta? <a href="/sesion">Inicia sesión</a></div><br>
+                    </center>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/cssini/style2.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Iniciar sesión</title>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+        
+        .success-message {
+            color: green;
+            font-size: 14px;
+        }
+        
+        .general-error {
+            color: red;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="formulario">
+        <h1>Inicio de sesión</h1>
+        <div class="input-group">
+            <form action="/login" method="post">
+                <div class="email">
+                    <input type="text" name="correo" required>
+                    <label>Correo electrónico</label>
+                </div>
+                <div class="contrasena">
+                    <input type="password" name="contrasena" required>
+                    <label>Contraseña</label>
+                </div>
+                <% if (typeof error !== 'undefined' && error) { %>
+                    <div id="errorGeneral" class="general-error" style="display: block;">
+                        <p class="error-message"><%= error %></p>
+                    </div>
+                <% } %>
+                <center>
+                    <input type="submit" value="Iniciar">
+                    <br>
+                    <br>
+                    <div class="RecuContra">¿Olvidaste tu contraseña? <a href="/recuperar">Cambiar contraseña</a></div><br>
+                    <div class="Registrarse">¿No tienes una cuenta? <a href="/registrar">Regístrate</a></div><br>
+                    <div>
+                    <a href="/">Regresar a la pantalla principal</a>
+                    </div>
+                    <br>
+                </center>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

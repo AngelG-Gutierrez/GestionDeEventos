@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Tablas/dashboardtablas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Pagina de panel de Administracion</title>
+    <style>
+        .button-red {
+            background-color: #b81f2e;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body action="/indexEventos">
+
+    <!-- Casilla de verificacion -->
+    <input type="checkbox" id="checkbox">
+
+    <!-- Inicio del Encabezado -->
+    <header class="header">
+        <h2 class="u-name">Administradores <b>SonidoShorty</b>
+            <label for="checkbox">
+                <!-- Iconos de Aplicaciones Font-Awesome -->
+                <i id="navbar" class="fa fa-bars" aria-hidden="true"></i>
+            </label>
+        </h2>
+    </header>
+    <!-- Fin del Encabezado -->
+
+    <!-- Cuerpo de la página -->
+    <div class="body">
+        <!-- Barra lateral Izquierda -->
+        <nav class="side-bar-left">
+            <!-- Imagen del perfil -->
+            <div class="user-p">
+                <img src="/recursos/LOGOTIPO2.5.png" alt="" class="perfil">
+            </div>
+            <ul>
+                <!-- User -->
+                <li>
+                    <a href="/indexPerfils">
+                        <i class="fa fa-user"></i>
+                        <span>Perfil</span>
+                    </a>
+                </li>
+                <!-- Configuracion -->
+                <li>
+                    <a href="/indexconfig">
+                        <i class="fa fa-cog"></i>
+                        <span>Configuracion</span>
+                    </a>
+                </li>
+                <!-- Usuarios -->
+                <li>
+                    <a href="/indexadmin">
+                        <i class="fa fa-table"></i>
+                        <span>Usuarios</span>
+                    </a>
+                </li>
+                <!-- Eventos -->
+                <li>
+                    <a href="/indexEventos">
+                        <i class="fa fa-table"></i>
+                        <span>Eventos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/indexComentarios">
+                        <i class="fa fa-table"></i>
+                        <span>Comentarios</span>
+                    </a>
+                </li>
+                <!-- Salir -->
+                <li>
+                    <a href="/logout">
+                        <i class="fa fa-power-off"></i>
+                        <span>Salir</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Perfil de Usuario dentro de la sección blanca -->
+        <section class="seccion-perfil-usuario">
+            <div class="perfil-usuario-header">
+                <div class="perfil-usuario-portada">
+                    <div class="perfil-usuario-avatar">
+                        <img src="/recursos/usuario.png" alt="img-avatar">
+                    </div>
+                </div>
+            </div>
+            <center>
+                <table id="users" class="stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
+                    <thead>
+                        <tr class="bg-indigo-400 bg-opacity-100 text-white">
+                            <th data-priority="1">ID DE USUARIO</th>
+                            <th data-priority="2">NOMBRE</th>
+                            <th data-priority="3">APELLIDOS</th>
+                            <th data-priority="4">DIRECCION DE EVENTO</th>
+                            <th data-priority="5">FECHA DE EVENTO</th>
+                            <th data-priority="6">HORA DE INICIO</th>
+                            <th data-priority="7">HORA DE CIERRE</th>
+                            <th data-priority="9">PAQUETE CONTRATADO</th>
+                            <th data-priority="10">PRECIO DEL PAQUETE</th>
+                            <th data-priority="11">FECHA FIRMA DE CONTRATO</th>
+                            <th data-priority="12">HORA FIRMA DE CONTRATO</th>
+                            <th data-priority="13">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se agregarán las filas dinámicamente -->
+                    </tbody>
+                </table>
+            </center>
+            <!-- jQuery -->
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <!-- Datatables -->
+            <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+            <script src="/js/accionesAdministrador.js"></script>
+
+            <script>
+                $(document).ready(function () {
+                    const url = '/api/eventos';
+                    function formatTimeTo12Hour(time) {
+                        let [hours, minutes] = time.split(':');
+                        hours = parseInt(hours);
+                        const ampm = hours >= 12 ? 'PM' : 'AM';
+                        hours = hours % 12;
+                        hours = hours ? hours : 12; // El 0 debe ser 12
+                        minutes = minutes.padStart(2, '0');
+                        return hours + ':' + minutes + ' ' + ampm;
+                    }
+                    $('#users').DataTable({
+    ajax: {
+        url: '/api/eventos',
+        dataSrc: '',
+    },
+    columns: [
+        { data: "Id_Usuario" },
+        { data: "Nombre_Usuario" },
+        { data: "apellidos_Usuario" },
+        { data: "Lugar_Evento" },
+        { 
+            data: "Fecha_Evento",
+            render: function(data, type, row) {
+                if (type === 'display' || type === 'filter') {
+                    const date = new Date(data);
+                    return date.toLocaleDateString();
+                }
+                return data;
+            }
+        },
+        { 
+            data: "Hora_Inicio",
+            render: function(data, type, row) {
+                if (type === 'display' || type === 'filter') {
+                    return formatTimeTo12Hour(data);
+                }
+                return data;
+            }
+        },
+        { 
+            data: "Hora_Final",
+            render: function(data, type, row) {
+                if (type === 'display' || type === 'filter') {
+                    return formatTimeTo12Hour(data);
+                }
+                return data;
+            }
+        },
+        { data: "NombrePaquete" },
+        { data: "Precio" },
+        { 
+            data: "fecha_citacontrato",
+            render: function(data, type, row) {
+                if (type === 'display' || type === 'filter') {
+                    const date = new Date(data);
+                    return date.toLocaleDateString();
+                }
+                return data;
+            }
+        },
+        { 
+            data: "hora_citacontrato",
+            render: function(data, type, row) {
+                if (type === 'display' || type === 'filter') {
+                    return formatTimeTo12Hour(data);
+                }
+                return data;
+            }
+        },
+        {
+            data: null,
+            className: 'dt-center',
+            orderable: false,
+            render: function (data, type, row) {
+                if (type === 'display') {
+                    return `<button class="button-red" onclick="confirmarEliminarEvento(${row.Id_Usuario})">Eliminar Evento</button>`;
+                }
+                return '';
+            }
+        }
+    ],
+    responsive: true
+}).columns.adjust().responsive.recalc();
+                });
+            </script>
+        </section>
+    </div>
+    <script>
+                    function confirmarEliminarEvento(idUsuario) {
+                    Swal.fire({
+                        title: "Estás seguro?",
+                        text: "La acción no es reversible!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Sí, eliminar usuario!",
+                        cancelButtonText: "Cancelar"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            eliminarEventoPanelAdmin(idUsuario);
+                            Swal.fire({
+                                title: "Evento eliminado correctamente!",
+                                icon: "success"
+                            }).then(() => {
+                                $('#users').DataTable().ajax.reload();
+                            });
+                        }
+                    });
+                }
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style2.css">
+    <link rel="stylesheet" type="text/css" href="/cssini/style24.css">
+    <title>RegistroAdmin</title>
+</head>
+
+<body>
+    <div class="formulario">
+        <h1>¡Bienvenido Usuario!</h1>
+        <form action="usuarioedit" id="registroForm" method="post" onsubmit="return validarFormulario()">
+            <div class="input-group">
+                <div class="username">
+                    <input type="text" id="username" name="username" required>
+                    <label>Ingresa tu nombre de usuario</label>
+                </div>
+
+                <div class="apellidos">
+                    <input type="text" id="apellidos" name="apellidos" required>
+                    <label>Ingresa tus apellidos</label>
+                </div>
+
+                <div class="telefono">
+                    <input type="text" id="telefono" name="telefono" title="Formato válido: XXX-XXX-XXXX" required>
+                    <label>Ingresa tu número telefónico</label>
+                </div>
+
+                <div class="email">
+                    <input type="input" id="correo" name="correo" required>
+                    <label>Ingresa tu correo electrónico</label>
+                </div>
+            </div>
+            <div class="button-group">
+                <input type="submit" class="submitBtn" value="Actualizar">
+                <input type="button" class="submitBtn" value="Eliminar cuenta">
+                <br>
+                <br>
+                <h1></h1>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

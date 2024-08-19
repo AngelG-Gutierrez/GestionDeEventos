@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/cssini/style3.css">
+    <title>Recuperar cuenta</title>
+    <style>
+        .custom-button {
+        width: 60%;
+        height: 50px;
+        border: 1px solid #6C3483; /* Color del borde por defecto */
+        background: #6C3483;
+        border-radius: 25px;
+        font-size: 18px;
+        color: white;
+        cursor: pointer;
+        outline: none;
+        transition: border-color 0.5s; /* Transición para el cambio de color del borde */
+    }
+    
+    .custom-button:hover {
+        border-color: purple; /* Color del borde en estado hover */
+    }
+    </style>
+</head>
+
+<body>
+    <div class="formulario">
+        <h1>Recupera tu cuenta</h1>
+        <h5>Para poder recuperar tu cuenta ingresa tu correo electrónico, <br> en unos momentos le llegará la solicitud</h5>
+        <div>
+            <div class="input-group">
+                <form id="enviarSolicitud" method="post">
+                    <div class="correo">
+                        <input type="input" id="correo" name="correo" required>
+                        <label for="correo">Ingresa tu correo electrónico</label>
+                    </div>
+                    <center>
+                        <button type="button" class="custom-button" name="submit" onclick="solicitarCambio()">Solicitar Cambio</button>
+                        <br><br>
+                        <div class="Yacuenta">¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></div><br>
+                    </center>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function solicitarCambio() {
+            console.log("entro funcion solicitud");
+    
+            const correo = document.getElementById('correo').value;
+    
+            fetch('/recuperar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ correo: correo }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Solicitud enviada',
+                        text: data.message,
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href = '/logout'; // Redirigir a /login
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message,
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ocurrió un error al enviar la solicitud',
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

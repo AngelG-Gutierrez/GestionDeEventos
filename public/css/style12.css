@@ -1,0 +1,32 @@
+body {
+    background-image: url('IMAGENES/TYP\ SHORTY.png'); /* Cambia esto a la ruta de tu imagen */
+    background-size: cover;
+    background-position: auto ;
+    background-repeat: no-repeat ;
+    height: 10vh;
+    margin: 0;
+    
+  }
+
+  .fcc-btn{
+    background-color: green;
+    color: #fff;
+    padding: 15px 25px;
+    text-decoration: none;
+    border-radius: 25px;
+  }
+
+
+  .form-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+    color: white;
+  }
+  .form-label {
+    color: white;
+  }
+
+  

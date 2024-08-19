@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/cssini/style2.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/accionesAdministrador.js"></script>
+    <title>Registro</title>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+        
+        .success-message {
+            color: green;
+            font-size: 14px;
+        }
+        
+        .general-error {
+            color: red;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+    .custom-button {
+        width: 60%;
+        height: 50px;
+        border: 1px solid #6C3483; /* Color del borde por defecto */
+        background: #6C3483;
+        border-radius: 25px;
+        font-size: 18px;
+        color: white;
+        cursor: pointer;
+        outline: none;
+        transition: border-color 0.5s; /* Transición para el cambio de color del borde */
+    }
+    
+    .custom-button:hover {
+        border-color: purple; /* Color del borde en estado hover */
+    }
+
+    @media (max-width: 600px) {
+            .formulario {
+                padding: 15px;
+            }
+
+            .custom-button {
+                width: 100%;
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="formulario">
+        <h1>¡Crea tu cuenta!</h1>
+        <form id="registrarUsuario"  method="POST">
+            <div class="input-group">
+                <div class="username">
+                    <input type="text" id="username" name="username" required>
+                    <label for="username">Ingresa tu nombre</label>
+                </div>
+                <div class="apellido">
+                    <input type="text" id="apellido" name="apellido" required>
+                    <label for="apellido">Ingresa tus apellidos</label>
+                </div>
+                <div class="fechanac">
+                    <input type="date" id="fechanac" name="fechanac" required>
+                    <label for="fechanac">Fecha de nacimiento</label>
+                </div>
+                <div class="telefono">
+                    <input type="text" id="telefono" name="telefono" required>
+                    <label for="telefono">Ingresa tu número telefónico</label>
+                </div>
+                <div class="email">
+                    <input type="text" id="email" name="email" required>
+                    <label for="email">Ingresa tu correo electrónico</label>
+                </div>
+                <div class="contra">
+                    <input type="password" id="password" name="contra" required>
+                    <label for="password">Crea una contraseña</label>
+                </div>
+                <div class="confirm_password">
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                    <label for="confirm_password">Ingresa nuevamente la contraseña</label>
+                    <span id="error_password_match" class="error-message" style="display: none;">Las contraseñas no coinciden.</span>
+                </div>
+                <div id="errorGeneral" class="general-error" style="display: <%= !success ? 'block' : 'none' %>">
+                    <% if (!success) { %>
+                        Error al registrar el usuario(Correo y/o número de teléfono ya registrados). Por favor, intente de nuevo.
+                        <% validaciones.forEach(validation => { %>
+                            <p class="error-message"><%= validation.msg %></p>
+                        <% }); %>
+                    <% } %>
+                </div>
+                <br>
+            </div>
+            <center>
+                <button type="button" class="custom-button" onclick="registroUsuario()">Registrar</button><br><br>
+                <div class="Yacuenta">¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></div><br>
+                <div>
+                <a href="/">Regresar a la pantalla principal</a>
+                </div>
+                <br>
+            </center>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function registroUsuario() {
+            Swal.fire({
+                title: "Deseas registrarte?",
+                text: "La acción no es reversible!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Registrarme",
+                cancelButtonText: "Cancelar Registro"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Obtener datos del formulario
+                    const form = document.getElementById('registrarUsuario');
+                    const formData = new FormData(form);
+                    const jsonData = Object.fromEntries(formData.entries());
+
+                    fetch('/registrar', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(jsonData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Respuesta del servidor:', data); // Verifica la respuesta del servidor
+                        if (data.success) {
+                            Swal.fire({
+                                title: "Usuario Registrado!",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.href = "/login";
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error al registrar usuario!",
+                                text:"Revise si los datos están completos y asegúrese de que el correo electrónico y el número de teléfono no hayan sido registrados anteriormente.",
+                                icon: "error"
+                            });
+                        }
+                    })
+                }
+            });
+        }
+    </script>
+    <script>
+        const dobInput = document.getElementById('fechanac');
+        const today = new Date();
+        const minAge = 18;
+        const minDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
+        dobInput.max = minDate.toISOString().split('T')[0];
+    </script>
+</body>
+</html>

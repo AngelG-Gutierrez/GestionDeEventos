@@ -1,0 +1,213 @@
+.nav-link {
+  color: white !important;
+  text-decoration: underline;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: black;
+}
+
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background-color: #000;
+color: #fff;
+}
+
+.fixed-top {
+position: fixed;
+top: 0;
+width: 100%;
+background-color: #b71ecf;
+border-bottom: 1px solid #2774e8;
+z-index: 1030;
+}
+
+.navbar {
+display: flex;
+justify-content: space-around;
+align-items: center;
+padding: 1rem;
+}
+
+.nav-link {
+color: #fff;
+text-decoration: none;
+padding: 0.5rem 1rem;
+transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+background-color: #237f7f;
+}
+
+.btn-danger {
+background-color: #be1b1b;
+color: #fff;
+}
+
+.btn-primary{
+  background-color: #2774e8;
+  color: #fff
+}
+
+.btn-success {
+  background-color: #1ea329;
+  color: #fff;
+}
+
+.btn-eventos {
+  background-color: #1ea329;
+  color: #fff;
+}
+
+.ban {
+padding-top: 70px;
+}
+
+.logo {
+max-width: 100%;
+height: auto;
+}
+
+.content {
+padding: 2rem;
+}
+
+@media (max-width: 768px) {
+.navbar {
+  flex-direction: column;
+}
+}
+
+.ban img {
+  width: 100%;
+  height: auto;
+}
+.navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nav-link {
+  margin: 5px 0;
+}
+@media (min-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+}
+
+#foot{
+  background-color: #1f4175;
+}
+
+.estrellitas {
+  direction: rtl;
+  float: none;
+  margin: 0 auto;
+}
+.estrellitas label {
+  display: inline-block;
+  padding: 0 5px;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  background: url("/recursos/estrella.png");
+  background-size: cover;
+}
+.estrellitas input[type="radio"] {
+  display: none;
+}
+.estrellitas input[type="radio"]:checked ~ label {
+  background: url("/recursos/estrella-llena.png");
+  background-size: cover;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(120deg, #8E44AD, #5499C7);
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.Comentario {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.Comentario h1 {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.Comentario h3 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.Comentario form {
+  text-align: center;
+}
+
+.Comentario textarea {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+.Comentario input[type="submit"],
+.Comentario input[type="reset"] {
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #6C3483;
+  color: white;
+  margin: 5px 1%;
+  box-sizing: border-box;
+}
+
+.Comentario input[type="submit"]:hover,
+.Comentario input[type="reset"]:hover {
+  background: purple;
+}
+
+@media (max-width: 768px) {
+  .Comentario textarea {
+      width: 100%;
+  }
+
+  .Comentario input[type="submit"],
+  .Comentario input[type="reset"] {
+      width: 100%;
+      margin: 10px 0;
+  }
+}

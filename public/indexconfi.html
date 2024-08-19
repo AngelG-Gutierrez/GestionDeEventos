@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/configuracion/dashboardconfi.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Página de panel de Administración</title>
+</head>
+
+<body>
+
+    <!-- Casilla de verificación -->
+    <input type="checkbox" id="checkbox">
+
+    <!-- Encabezado -->
+    <header class="header">
+        <h2 class="u-name">Administradores<b>SonidoShorty</b>
+            <label for="checkbox">
+                <i id="navbar" class="fa fa-bars" aria-hidden="true"></i>
+            </label>
+        </h2>
+    </header>
+
+    <!-- Cuerpo de la página -->
+    <div class="body">
+        <!-- Barra lateral izquierda -->
+        <nav class="side-bar-left">
+            <!-- Imagen del perfil -->
+            <div class="user-p">
+                <img src="LOGOTIPO2.5.png" alt="" class="perfil">
+            </div>
+            <ul>
+                <!-- Enlaces del menú -->
+                <li>
+                    <a href="indexPerfil.html">
+                        <i class="fa fa-user"></i>
+                        <span>Perfil</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="indexTablas.html">
+                        <i class="fa fa-table"></i>
+                        <span>Tabla</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-power-off"></i>
+                        <span>Salir</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sección principal -->
+        <section class="seccion-perfil-usuario">
+            <div class="perfil-usuario-header">
+                <div class="perfil-usuario-portada">
+                    <div class="perfil-usuario-avatar">
+                        <img src="usuario.png" alt="img-avatar">
+                    </div>
+                </div>
+            </div>
+
+            <div class="formulario">
+
+                <div class="container">
+                    <h2>¡Cambia tus datos o elimina tu cuenta!</h2>
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellidos">Apellidos:</label>
+                            <input type="text" id="apellidos" name="apellidos" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="correo">Correo:</label>
+                            <input type="email" id="correo" name="correo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono:</label>
+                            <input type="tel" id="telefono" name="telefono" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contraseña">Contraseña:</label>
+                            <input type="password" id="contraseña" name="contraseña" required>
+                        </div>
+                        <div class="button-group">
+                            <input type="submit" class="submitBtn" value="Actualizar">
+                            <input type="button" class="submitBtn" value="Eliminar cuenta">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+</body>
+
+</html>

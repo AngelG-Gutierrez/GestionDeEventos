@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Tablas/dashboardtablas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Pagina de panel de Administracion</title>
+</head>
+
+<body>
+
+    <!-----Casilla de verificacion-->
+    <input type="checkbox" id="checkbox">
+    <!----Inicio del Encabezado-->
+    <header class="header">
+        <h2 class="u-name">Administradores<b>SonidoShorty</b>
+            <label for="checkbox">
+                <!---Iconos de Aplicaciones Font-Awesome-->
+                <i id="navbar" class="fa fa-bars" aria-hidden="true"></i>
+            </label>
+        </h2>
+    </header>
+    <!----Fin del Encabezado----->
+
+    <!----Cuerpo de la página---->
+    <div class="body">
+        <!--- Barra lateral Izquierda---------->
+        <nav class="side-bar-left">
+            <!---- Imagen del perfil------>
+            <div class="user-p">
+                <img src="LOGOTIPO2.5.png" alt="" class="perfil">
+            </div>
+            <ul>
+
+                <!----User-->
+                <li>
+                    <a href="indexPerfil.html">
+                        <i class="fa fa-user"></i>
+                        <span>Perfil</span>
+                    </a>
+                </li>
+
+                <!----------Configuracion---->
+                <li>
+                    <a href="indexTablas.html">
+                        <i class="fa fa-cog"></i>
+                        <span>Configuracion</span>
+                    </a>
+                </li>
+                <!----------table---->
+                <li>
+                    <a href="">
+                        <i class="fa fa-table"></i>
+                        <span>Tabla</span>
+                    </a>
+                </li>
+                <!----------Salir---->
+                <li>
+                    <a href="">
+                        <i class="fa fa-power-off"></i>
+                        <span>Salir</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!--- Perfil de Usuario dentro de la sección blanca ---->
+        <section class="seccion-perfil-usuario">
+            <div class="perfil-usuario-header">
+                <div class="perfil-usuario-portada">
+                    <div class="perfil-usuario-avatar">
+                        <img src="usuario.png" alt="img-avatar">
+
+
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <center>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID de Usuario</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Correo</th>
+                            <th>Número de Teléfono</th>
+                            <th>Evento</th>
+                            <th>Paquete</th>
+                            <th>Comentario</th>
+                            <th>Dirección</th>
+                            <th>Fecha de Inicio</th>
+                            <th>Fecha de Finalización</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Juan</td>
+                            <td>Pérez</td>
+                            <td>juan.perez@example.com</td>
+                            <td>+34 123 456 789</td>
+                            <td>Conferencia de Tecnología</td>
+                            <td>Paquete Premium</td>
+                            <td>Muy interesado en el evento.</td>
+                            <td>Calle Falsa 123, Madrid</td>
+                            <td>2024-08-01</td>
+                            <td>2024-08-03</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Maria</td>
+                            <td>González</td>
+                            <td>maria.gonzalez@example.com</td>
+                            <td>+34 987 654 321</td>
+                            <td>Feria de Empleo</td>
+                            <td>Paquete Básico</td>
+                            <td>Buen sonido</td>
+                            <td>Calle Verdadera 456, Barcelona</td>
+                            <td>2024-09-10</td>
+                            <td>2024-09-12</td>
+                        </tr>
+                        <!-- Agrega más filas según sea necesario -->
+                    </tbody>
+                </table>
+                <div class="button-group">
+                    <input type="submit" class="submitBtn" value="Agregar">
+                    <input type="button" class="submitBtn" value="Eliminar registro">
+                    <input type="button" class="submitBtn" value="Actualizar">
+                </div>
+            </center>
+        </section>
+    </div>
+</body>
+
+</html>

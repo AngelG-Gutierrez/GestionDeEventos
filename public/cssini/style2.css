@@ -1,0 +1,391 @@
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: monserrat;
+        background: linear-gradient(120deg, #8E44AD, #5499C7);
+        height: 100vh;
+    }
+    
+    .formulario {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        box-shadow: 0 0 50px #000080;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        background: whitesmoke;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .formulario h1 {
+        text-align: center;
+        padding: 0 0 20px 0;
+        border-bottom: 1px solid silver;
+    }
+    
+    .formulario form {
+        padding: 0 40px;
+        box-sizing: border-box;
+    }
+    
+    form .username {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+
+
+    form .fechanac {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+    
+    form .apellido {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+    
+    form .telefono {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+
+    form .contrasena {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+    
+    form .email {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+    
+    form .contra {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+    
+    form .conficontra {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+    
+    form .confirm_password {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+    
+    .input-group input:focus~label,
+    .input-group :valid~label {
+        top: -5px;
+        color: #6C3483;
+        transition: top 0.3s ease, color 0.3s ease;
+    }
+    
+    .username span::before {
+        content: '';
+        position: absolute;
+        top: 40px;
+        left: 0;
+        width: 0%;
+        height: 2px;
+        background: #6C3483;
+        transition: .5s;
+    }
+    
+    .conficontra input {
+        width: 100%;
+        padding: 0 5 px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+    
+    .conficontra label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adadad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+    }
+    
+    .confirm_password input {
+        width: 100%;
+        padding: 0 5 px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+        transition: .5s;
+    }
+    
+    .confirm_password label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adadad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+    }
+    
+    .contra input {
+        width: 100%;
+        padding: 0 5 px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+    
+    .contra label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adadad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+    }
+    
+    .email input {
+        width: 100%;
+        padding: 0 5 px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+    
+    .email label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adadad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+    }
+    
+    .telefono input {
+        width: 100%;
+        padding: 0 5 px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+    
+    .telefono label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adadad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+    }
+    
+    .apellido input {
+        width: 100%;
+        padding: 0 5 px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+    
+    .apellido label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adadad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+    }
+    
+    .username input {
+        width: 100%;
+        padding: 0 5 px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+    
+    .username label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adadad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+    }
+    
+    input[type="submit"] {
+        width: 60%;
+        height: 50px;
+        border: 1px solid;
+        background: #6C3483;
+        border-radius: 25px;
+        font-size: 18px;
+        color: white;
+        cursor: pointer;
+        outline: none;
+    }
+    
+    input[type="submit"]:hover {
+        border-color: purple;
+        transition: .5s;
+    }
+
+    input[type="reset"] {
+        width: 60%;
+        height: 50px;
+        border: 1px solid;
+        background: #6C3483;
+        border-radius: 25px;
+        font-size: 18px;
+        color: white;
+        cursor: pointer;
+        outline: none;
+    }
+    
+    input[type="reset"]:hover {
+        border-color: purple;
+        transition: .5s;
+    }
+    
+    form .email {
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin: 30px 0;
+    }
+    
+    .email input {
+        width: 100%;
+        padding: 0 5 px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+    
+    .email label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adadad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+    .fechanac input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+
+    .fechanac label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #adadad;
+        font-size: 16px;
+        pointer-events: none;
+        transition: 0.3s ease;
+        transform-origin: 0 0;
+    }
+
+    .contrasena input {
+        width: 100%;
+        padding: 0 5 px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        background: none;
+        outline: none;
+    }
+    
+    .contrasena label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: #adadad;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+    .estrellitas {
+        direction: rtl;
+        float: none;
+        margin: 0 auto;
+      }
+      .estrellitas label {
+        display: inline-block;
+        padding: 0 5px;
+        cursor: pointer;
+        width: 70px;
+        height: 70px;
+        background: url("/recursos/estrella.png");
+        background-size: cover;
+      }
+      .estrellitas input[type="radio"] {
+        display: none;
+      }
+      .estrellitas input[type="radio"]:checked ~ label {
+        background: url("/recursos/estrella-llena.png");
+        background-size: cover;
+      }
+
+    .fechanac input:focus ~ label,
+    .fechanac input:valid ~ label {
+        top: -5px;
+        font-size: 12px;
+        color: #6C3483;
+    }
+
+    
+    .input-group input:focus~label,
+    .input-group :valid~label {
+        top: -5px;
+        color: #6C3483;
+        transition: top 0.3s ease, color 0.3s ease;
+    }
+
+    

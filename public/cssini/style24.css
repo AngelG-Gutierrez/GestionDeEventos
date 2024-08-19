@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: monserrat;
+    background: linear-gradient(120deg, #5f4abc, #794175);
+    height: 100vh;
+}
+
+.formulario {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 0 50px #000080;
+    transform: translate(-50%, -50%);
+    width: 440px;
+    background: whitesmoke;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.formulario h1 {
+    text-align: center;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid silver;
+}
+
+.formulario form {
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+form .telefono,
+form .email,
+form .passwrd {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
+}
+
+form .telefono input,
+form .email input,
+form .passwrd input {
+    width: 100%;
+    padding: 20px 5px 5px 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+form .telefono label,
+form .email label,
+form .passwrd label {
+    position: absolute;
+    top: 0;
+    left: 5px;
+    color: #adadad;
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+    padding: 0 5px;
+    background: whitesmoke;
+}
+
+.telefono input:focus~label,
+.telefono input:valid~label,
+.email input:focus~label,
+.email input:valid~label,
+.passwrd input:focus~label,
+.passwrd input:valid~label {
+    top: -5px;
+    color: blue;
+    transition: top 0.3s ease, color 0.3s ease;
+}
+
+input[type="submit"],
+input[type="button"] {
+    width: 40%;
+    height: 40px;
+    border: 1px solid;
+    background: #22419c;
+    border-radius: 25px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+input[type="button"] {
+    background: #b2160e;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.submitBtn {
+    padding: 10px 10px;
+    border: none;
+    background-color: #d61ba1;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submitBtn:hover {
+    background-color: #6a0da443;
+}

@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: monserrat;
+    background: linear-gradient(120deg, #8E44AD, #5499C7);
+    height: 100vh;
+}
+
+.formulario {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 0 50px #000080;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background: whitesmoke;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.formulario h1 {
+    text-align: center;
+}
+
+.formulario h5 {
+    text-align: center;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid silver;
+    left: 50%;
+    width: 400px;
+}
+
+.formulario form {
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+form .correo {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
+}
+
+.correo input {
+    width: 100%;
+    padding: 0 5 px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.correo label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.input-group input:focus~label,
+.input-group :valid~label {
+    top: -5px;
+    color: #6C3483;
+    transition: top 0.3s ease, color 0.3s ease;
+}
+
+input[type="submit"] {
+    width: 60%;
+    height: 50px;
+    border: 1px solid;
+    background: #6C3483;
+    border-radius: 25px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+input[type="submit"]:hover {
+    border-color: purple;
+    transition: .5s;
+}

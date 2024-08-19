@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type = "text/css" href="/cssini/style2.css">
+    <title>Iniciar sesión</title>
+</head>
+<body>
+    <div class="formulario">
+        <h1>Inicio de sesión</h1>
+        <div class="input-group">
+            <form action="/login" method="post">
+                <div class="email">
+                    <input type="text" name="email" required>
+                    <label>Correo electrónico</label>
+                </div>
+                <div class="contrasena">
+                    <input type="password" name="password" required>
+                    <label>Contraseña</label>
+                </div>
+                <center>
+                    <div class="RecuContra">¿Olvidaste tu contraseña? <a href="Recuperacion.html">Cambiar contraseña</a></div><br>
+                    <input type="submit" value="Iniciar">
+                    <div class="Registrarse">¿No tienes una cuenta? <a href="/registrar">Regístrate</a></div><br>
+                </center>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
