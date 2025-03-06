@@ -23,7 +23,7 @@ let conexion = mysql.createConnection({
     host: "127.0.0.1",
     database: "copia_db_shorty",
     user: "root",
-    password: ""
+    password: "PalomaH1"
 });
 
 // Verificar conexión a la base de datos
@@ -99,6 +99,48 @@ app.get('/indexComentariosUsr',(req,res)=>{
 app.get('/recuperar', (req, res) => {
     res.render('Recuperacion');
 });
+
+app.get('/indexCalificaciones',(req,res)=>{
+    res.render('IndexTablaCalificacion');
+});
+
+
+app.get('/api/comentariosUsuario/:id', (req, res) => {
+    const userCorreo = req.session.userCorreo;
+    if (!userCorreo) {
+        return res.redirect('/login');
+    }
+
+    conexion.query('SELECT id_usuarios FROM usuarios WHERE correo = ?', [userCorreo], (error, results) => {
+        if (error) {
+            console.error('Error obteniendo la información del usuario:', error);
+            return res.status(500).send('Error al obtener la información del usuario');
+        }
+
+        if (results.length > 0) {
+            const usuario = results[0];
+            const idUsuario = usuario.id_usuarios;
+
+            // Consulta para obtener los eventos del usuario
+            conexion.query('SELECT id_comentarios,text_comentario FROM comentarios WHERE id_usuarios = ?', [idUsuario], (error, comentarios) => {
+                if (error) {
+                    console.error('Error obteniendo los eventos del usuario:', error);
+                    return res.status(500).send('Error al obtener los eventos del usuario');
+                }
+
+                // Responder con los eventos del usuario y el ID del usuario
+                res.json({
+                    comentarios: comentarios,
+                    idUsuario: idUsuario
+                });
+            });
+        } else {
+            // No se encontraron usuarios con el correo proporcionado
+            res.status(404).send('Usuario no encontrado');
+        }
+    });
+});
+
 
   // Ruta para verificar si el usuario ya ha calificado
 app.get('/check-rating', (req, res) => {
@@ -194,6 +236,16 @@ app.get('/api/comentariosPanelAdmin', (req,res)=>{
     })
 });
 
+app.get('/api/calificacionesPanelAdmin', (req, res)=>{
+    conexion.query('SELECT * FROM calificaciones_usuarios',(error,filas)=>{
+        if(error){
+            throw error;
+        }else{
+            res.send(filas);
+        }        
+    })
+});
+
 app.get('/api/eventosUsuario', (req, res) => {
     const userCorreo = req.session.userCorreo;
     if (!userCorreo) {
@@ -235,15 +287,12 @@ app.get('/api/eventosUsuario', (req, res) => {
                     console.error('Error obteniendo los eventos del usuario:', error);
                     return res.status(500).send('Error al obtener los eventos del usuario');
                 }
-
-                // Responder con los eventos del usuario y el ID del usuario
                 res.json({
                     eventos: eventos,
                     idUsuario: idUsuario
                 });
             });
         } else {
-            // No se encontraron usuarios con el correo proporcionado
             res.status(404).send('Usuario no encontrado');
         }
     });
@@ -272,14 +321,12 @@ app.get('/api/comentariosUsuario', (req, res) => {
                     return res.status(500).send('Error al obtener los eventos del usuario');
                 }
 
-                // Responder con los eventos del usuario y el ID del usuario
                 res.json({
                     comentarios: comentarios,
                     idUsuario: idUsuario
                 });
             });
         } else {
-            // No se encontraron usuarios con el correo proporcionado
             res.status(404).send('Usuario no encontrado');
         }
     });
@@ -705,7 +752,14 @@ app.post('/actualizarAdmin', [
                 console.error('Error actualizando datos:', error);
                 return res.status(500).json({ success: false, message: 'Error al actualizar datos' });
             }
-            res.json({ success: true });
+            req.session.destroy((err) => {
+                if (err) {
+                    console.error('Error al destruir la sesión:', err);
+                    return res.status(500).json({ success: false, message: 'Error al cerrar sesión' });
+                }
+
+                res.json({ success: true });
+            });
         });
     }
 });
@@ -722,7 +776,7 @@ app.post('/eliminarCuentaAdmin', (req, res) => {
     conexion.query(eliminarUsuario, [idUsuario], (error, results) => {
         req.session.destroy((err) => {
             if (err) {
-                console.error('Error cerrando la sesión:', err);
+                console.log('Error cerrando la sesión:', err);
                 return res.status(500).send('Error cerrando la sesión');
             }
             res.redirect('/logout');
@@ -753,7 +807,15 @@ app.post('/actualizarUsuario', [
                 console.error('Error actualizando datos:', error);
                 return res.status(500).json({ success: false, message: 'Error al actualizar datos' });
             }
-            res.json({ success: true });
+
+            req.session.destroy((err) => {
+                if (err) {
+                    console.error('Error al destruir la sesión:', err);
+                    return res.status(500).json({ success: false, message: 'Error al cerrar sesión' });
+                }
+
+                res.json({ success: true });
+            });
         });
     }
 });
@@ -775,7 +837,7 @@ app.post('/eliminarCuentaUsuario', (req, res) => {
         
         req.session.destroy((err) => {
             if (err) {
-                console.error('Error cerrando la sesión:', err);
+                console.log('Error cerrando la sesión:', err);
                 return res.status(500).send('Error cerrando la sesión');
             }
             res.redirect('/logout');
@@ -869,6 +931,17 @@ app.post('/volverAdminPanel', (req, res) => {
 });
 
 //Post para recuperar contraseña
+const os = require('os');
+
+// Función para obtener la IP del servidor
+const getServerIp = () => {
+    const networkInterfaces = Object.values(os.networkInterfaces())
+        .flat()
+        .filter((details) => details.family === 'IPv4' && !details.internal);
+
+    return networkInterfaces.length > 0 ? networkInterfaces[0].address : 'localhost';
+};
+
 app.post('/recuperar', (req, res) => {
     const { correo } = req.body;
 
@@ -881,25 +954,40 @@ app.post('/recuperar', (req, res) => {
         if (results.length > 0) {
             const userId = results[0].id_usuarios;
             const token = crypto.randomBytes(20).toString('hex');
+            const expires = Date.now() + 14400000;
 
             // Guarda el token en la base de datos con una fecha de expiración
-            conexion.query('INSERT INTO password_resets (id_usuarios, token, expires) VALUES (?, ?, ?)', [userId, token, Date.now() + 14400000], (err) => {
-                if (err) {
-                    console.log('Error al guardar el token:', err);
-                    return res.status(500).json({ success: false, message: 'Error al generar el token' });
-                }
+            conexion.query(
+                'INSERT INTO password_resets (id_usuarios, token, expires) VALUES (?, ?, ?)',
+                [userId, token, expires],
+                (err) => {
+                    if (err) {
+                        console.log('Error al guardar el token:', err);
+                        return res.status(500).json({ success: false, message: 'Error al generar el token' });
+                    }
 
-                // Envía el correo con el enlace de recuperación
-                const resetLink = `http://localhost:3000/resets?token=${token}`;
-                sendEmail(correo, 'Recuperación de Contraseña', `Haz clic en el siguiente enlace para recuperar tu contraseña: ${resetLink}`)
-                    .then(() => {
-                        res.json({ success: true, message: 'Enlace de recuperación enviado a tu correo electrónico.' });
-                    })
-                    .catch((err) => {
-                        console.log('Error enviando el correo:', err);
-                        res.status(500).json({ success: false, message: 'Error al enviar el correo' });
-                    });
-            });
+                    // Obtén la IP del servidor
+                    const ipAddress = getServerIp();
+                    const resetLink = `http://${ipAddress}:3000/resets?token=${token}`;
+
+                    // Envía el correo con el enlace de recuperación
+                    sendEmail(
+                        correo,
+                        'Recuperación de Contraseña',
+                        `Haz clic en el siguiente enlace para recuperar tu contraseña: ${resetLink}`
+                    )
+                        .then(() => {
+                            res.json({
+                                success: true,
+                                message: 'Enlace de recuperación enviado a tu correo electrónico.',
+                            });
+                        })
+                        .catch((err) => {
+                            console.log('Error enviando el correo:', err);
+                            res.status(500).json({ success: false, message: 'Error al enviar el correo' });
+                        });
+                }
+            );
         } else {
             res.status(404).json({ success: false, message: 'Correo electrónico no encontrado' });
         }
@@ -1000,6 +1088,38 @@ app.post('/rutaComentarios', [
 
 
 
-app.listen(3000, () => {
-    console.log('SERVER UP en http://localhost:3000');
+// Actualizar el comentario existente
+app.post('/api/actualizarComentario/:id', (req, res) => {
+    const comentarioId = req.params.id;
+    const { text_comentario } = req.body;
+
+    const query = 'UPDATE comentarios SET text_comentario = ? WHERE id_comentarios = ?';
+    
+    conexion.query(query, [text_comentario, comentarioId], (err, result) => {
+        if (err) {
+            console.error('Error al actualizar el comentario:', err);
+            return res.status(500).json({ error: 'Error al actualizar el comentario' });
+        }
+        
+        if (result.affectedRows > 0) {
+            res.json({ success: true, message: 'Comentario actualizado exitosamente' });
+        } else {
+            res.status(404).json({ error: 'Comentario no encontrado' });
+        }
+    });
+});
+
+
+
+const PORT = 3000;
+
+app.listen(PORT, '0.0.0.0', () => {
+    const ip = require('os').networkInterfaces();
+    const networkInterfaces = Object.values(ip)
+        .flat()
+        .filter((details) => details.family === 'IPv4' && !details.internal);
+
+    const ipAddress = networkInterfaces.length > 0 ? networkInterfaces[0].address : 'localhost';
+
+    console.log(`SERVER UP en http://${ipAddress}:${PORT}`);
 });

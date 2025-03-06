@@ -2,119 +2,121 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="" />
     <title>RegistroAdmin</title>
-    <link rel="stylesheet" type="text/css" href="/cssini/style24.css">
+    <link rel="stylesheet" type="text/css" href="/cssini/style24.css" />
     <script src="/js/accionesAdministrador.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <div class="formulario">
-        <h1>¡Bienvenido <%= nombre %> ! Actualiza tus datos</h1>
+        <h1>¡Bienvenido <%= nombre %>! Actualiza tus datos</h1>
         <form id="actualizarEliminarUsuario" method="post" onsubmit="return validarFormulario()">
-            <div class="iniciosesion"><a href="#" onclick="window.history.back(); return false;">Regresar a la pantalla principal</a></div>
+            <div class="iniciosesion">
+                <a href="#" onclick="window.history.back(); return false;">Regresar a la pantalla principal</a>
+            </div>
             <div class="input-group">
                 <div class="telefono">
-                    <input type="text" id="telefono" name="telefono" title="Formato válido: XXX-XXX-XXXX" value="<%= num_tel %>" required>
+                    <input type="text" id="telefono" name="telefono" title="Formato válido: XXX-XXX-XXXX"
+                        value="<%= num_tel %>" required />
                     <label>Ingresa tu número telefónico</label>
                 </div>
-
                 <div class="email">
-                    <input type="text" id="correo" name="correo" value="<%= correo %>" required>
+                    <input type="text" id="correo" name="correo" value="<%= correo %>" required />
                     <label>Ingresa tu correo electrónico</label>
                 </div>
-
                 <div class="passwrd">
-                    <input type="password" id="passwrd" name="passwrd" value="<%= contrasena %>" required>
+                    <input type="password" id="passwrd" name="passwrd" value="<%= contrasena %>" required />
                     <label>Ingresa tu nueva contraseña</label>
                 </div>
             </div>
             <div class="button-group">
-                <input type="button" class="submitBtn" onclick="actualizarUsuario()" value="Actualizar">
-                <input type="button" class="submitBtn" onclick="eliminarUsuario()" value="Eliminar cuenta">
-                <br>
-                <br>
+                <input type="button" class="submitBtn" onclick="actualizarUsuario()" value="Actualizar" />
+                <input type="button" class="submitBtn" onclick="eliminarUsuario()" value="Eliminar cuenta" />
+                <br /><br />
                 <h1></h1>
             </div>
         </form>
     </div>
-    <script>
-                function eliminarUsuario() {
-                    Swal.fire({
-                    title: "Estás seguro?",
-                    text: "La acción no es reversible!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Sí, eliminar cuenta!",
-                    cancelButtonText: "Cancelar"
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        fetch('/eliminarCuentaUsuario', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                        })
-                        Swal.fire({
-                                title: "Cuenta eliminada correctamente!",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.href = "/logout";
-                                });
-                    }
-                });
-                }
-                function actualizarUsuario() {
-                Swal.fire({
-                    title: "Deseas actualizar tus datos?",
-                    text: "La acción no es reversible!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Actualizar datos!",
-                    cancelButtonText: "Cancelar"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const correo = document.getElementById('correo').value;
-                        const telefono = document.getElementById('telefono').value;
-                        const passwrd = document.getElementById('passwrd').value;
 
-                        fetch('/actualizarUsuario', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                correo: correo,
-                                telefono: telefono,
-                                passwrd: passwrd
-                            })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
+    <script>
+        function eliminarUsuario() {
+            Swal.fire({
+                title: "Estás seguro?",
+                text: "La acción no es reversible!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, eliminar cuenta!",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch("/eliminarCuentaUsuario", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+                    Swal.fire({
+                        title: "Cuenta eliminada correctamente!",
+                        icon: "success",
+                    }).then(() => {
+                        window.location.href = "/logout";
+                    });
+                }
+            });
+        }
+
+        function actualizarUsuario() {
+            Swal.fire({
+                title: "Deseas actualizar tus datos?",
+                text: "La acción no es reversible!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Actualizar datos!",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const correo = document.getElementById("correo").value;
+                    const telefono = document.getElementById("telefono").value;
+                    const passwrd = document.getElementById("passwrd").value;
+
+                    fetch("/actualizarUsuario", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            correo: correo,
+                            telefono: telefono,
+                            passwrd: passwrd,
+                        }),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
                             if (data.success) {
                                 Swal.fire({
                                     title: "Usuario actualizado!",
-                                    icon: "success"
+                                    icon: "success",
                                 }).then(() => {
                                     window.location.href = "/logout";
                                 });
                             } else {
                                 Swal.fire({
                                     title: "Error al actualizar usuario!",
-                                    icon: "error"
+                                    icon: "error",
                                 });
                             }
-                        })
-                    }
-                });
-            }
+                        });
+                }
+            });
+        }
     </script>
 </body>
 

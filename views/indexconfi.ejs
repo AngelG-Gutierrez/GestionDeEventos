@@ -61,6 +61,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/indexCalificaciones">
+                        <i class="fa fa-table"></i>
+                        <span>Calificaciones</span>
+                    </a>
+                </li>
+                <li>
                     <a href="/logout">
                         <i class="fa fa-power-off"></i>
                         <span>Salir</span>
@@ -90,9 +96,11 @@
                             <label for="apellidos">Apellidos:</label>
                             <input type="text" id="apellidos" name="apellidos" value="<%= apellidos %>" readonly>
                         </div>
-                        <div class="form-group"> 
+                        <div class="form-group">
                             <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                            <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" value="<%= fechanacimiento.getDate() %>/<%= fechanacimiento.getMonth() + 1 %>/<%= fechanacimiento.getFullYear() %>" readonly> 
+                            <input type="text" id="fecha_nacimiento" name="fecha_nacimiento"
+                                value="<%= fechanacimiento.getDate() %>/<%= fechanacimiento.getMonth() + 1 %>/<%= fechanacimiento.getFullYear() %>"
+                                readonly>
                         </div>
                         <div class="form-group">
                             <label for="edad">Edad:</label>
@@ -100,20 +108,22 @@
                         </div>
                         <div class="form-group">
                             <label for="correo">Correo:</label>
-                            <input type="email" id="correo" name="correo" value="<%= correo %>" required> 
+                            <input type="email" id="correo" name="correo" value="<%= correo %>" required>
                         </div>
-                    
+
                         <div class="form-group">
                             <label for="telefono">Teléfono:</label>
-                            <input type="tel" id="telefono" name="telefono" value="<%= num_tel %>" required> 
+                            <input type="tel" id="telefono" name="telefono" value="<%= num_tel %>" required>
                         </div>
                         <div class="form-group">
                             <label for="contraseña">Contraseña:</label>
                             <input type="password" id="contraseña" name="contraseña" value="<%= contrasena %>" required>
                         </div>
-                        <div class="button-group"> 
-                            <input type="button" class="submitBtn" onclick="actualizarAdministrador()" value="Actualizar">
-                            <input type="button" class="submitBtn" onclick="eliminarAdministrador()" value="Eliminar cuenta">
+                        <div class="button-group">
+                            <input type="button" class="submitBtn" onclick="actualizarAdministrador()"
+                                value="Actualizar">
+                            <input type="button" class="submitBtn" onclick="eliminarAdministrador()"
+                                value="Eliminar cuenta">
                         </div>
                     </form>
                 </div>
@@ -122,59 +132,59 @@
     </div>
     <script>
         function eliminarAdministrador() {
+            Swal.fire({
+                title: "Estás seguro?",
+                text: "La acción no es reversible!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, eliminar cuenta de administrador!",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/eliminarCuentaAdmin', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
                     Swal.fire({
-                    title: "Estás seguro?",
-                    text: "La acción no es reversible!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Sí, eliminar cuenta de administrador!",
-                    cancelButtonText: "Cancelar"
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        fetch('/eliminarCuentaAdmin', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                        })
-                        Swal.fire({
-                                title: "Usuario eliminado correctamente!",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.href = "/logout";
-                                });
-                    }
-                });
+                        title: "Usuario eliminado correctamente!",
+                        icon: "success"
+                    }).then(() => {
+                        window.location.href = "/logout";
+                    });
                 }
-                function actualizarAdministrador() {
-                Swal.fire({
-                    title: "Deseas actualizar tus datos?",
-                    text: "La acción no es reversible!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Actualizar datos!",
-                    cancelButtonText: "Cancelar"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const correo = document.getElementById('correo').value;
-                        const telefono = document.getElementById('telefono').value;
-                        const contraseña = document.getElementById('contraseña').value;
+            });
+        }
+        function actualizarAdministrador() {
+            Swal.fire({
+                title: "Deseas actualizar tus datos?",
+                text: "La acción no es reversible!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Actualizar datos!",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const correo = document.getElementById('correo').value;
+                    const telefono = document.getElementById('telefono').value;
+                    const contraseña = document.getElementById('contraseña').value;
 
-                        fetch('/actualizarAdmin', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                correo: correo,
-                                telefono: telefono,
-                                contraseña: contraseña
-                            })
+                    fetch('/actualizarAdmin', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            correo: correo,
+                            telefono: telefono,
+                            contraseña: contraseña
                         })
+                    })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
@@ -191,9 +201,10 @@
                                 });
                             }
                         })
-                    }
-                });
-            }
+                }
+            });
+        }
     </script>
 </body>
+
 </html>

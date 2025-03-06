@@ -21,6 +21,15 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .button-blue{
+            background-color:rgb(17, 119, 85);
+            color:white;
+            border:none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -117,7 +126,8 @@
                                 render: function (data, type, row) {
                                     if (type === 'display') {
                                         return `
-                                        <button class="button-red" onclick="confirmarEliminarComentario(${data})">Eliminar Comentario</button>`;
+                                        <button class="button-red" onclick="confirmarEliminarComentario(${data})">Eliminar Comentario</button>
+                                        <button class="button-blue" onclick="actualizarComentario(${data})">Editar comentario</button>`;
                                     }
                                     return '';
                                 }
@@ -150,6 +160,58 @@
                         }
                     });
                 }
+    </script>
+    <script>
+        function actualizarComentario(id_comentarios) {
+            // Abrir SweetAlert con un input para editar el comentario
+            Swal.fire({
+                title: 'Editar comentario',
+                input: 'textarea',
+                inputLabel: 'Actualiza tu comentario',
+                inputPlaceholder: 'Escribe tu comentario aquí...',
+                inputAttributes: {
+                    'aria-label': 'Escribe tu comentario aquí'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Actualizar',
+                cancelButtonText: 'Cancelar',
+                showLoaderOnConfirm: true,
+                preConfirm: (nuevoComentario) => {
+                    if (!nuevoComentario) {
+                        Swal.showValidationMessage('El comentario no puede estar vacío');
+                        return;
+                    }
+                    // Enviar el nuevo comentario al servidor
+                    return fetch(`/api/actualizarComentario/${id_comentarios}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ text_comentario: nuevoComentario })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .catch(error => {
+                        Swal.showValidationMessage(`Error: ${error}`);
+                    });
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Comentario actualizado!',
+                        icon: 'success'
+                    }).then(() => {
+                        // Recargar la tabla para reflejar los cambios
+                        $('#users').DataTable().ajax.reload();
+                    });
+                }
+            });
+        }
     </script>
         </section>
     </div>
