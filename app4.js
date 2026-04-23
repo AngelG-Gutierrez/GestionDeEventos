@@ -620,30 +620,33 @@ const getServerIp = () => {
     return networkInterfaces.length > 0 ? networkInterfaces[0].address : 'localhost';
 };
 
+const bcrypt = require('bcrypt'); // Añadir al inicio del archivo
+const saltRounds = 10;
+
 app.post('/recuperar', (req, res) => {
     const { correo } = req.body;
 
+    // Siempre respondemos lo mismo para evitar Account Enumeration
+    const mensajeExito = { success: true, message: 'Si el correo existe, se ha enviado un enlace de recuperación.' };
+
     conexion.query('SELECT id_usuarios FROM usuarios WHERE correo = ?', [correo], (error, results) => {
-        if (error) return res.status(500).json({ success: false, message: 'Error al verificar el correo' });
+        if (error) return res.status(500).json({ success: false, message: 'Error de servidor' });
 
         if (results.length > 0) {
             const userId = results[0].id_usuarios;
             const token = crypto.randomBytes(20).toString('hex');
-            const expires = Date.now() + 14400000;
+            const expires = Date.now() + 14400000; // 4 horas
 
             conexion.query('INSERT INTO password_resets (id_usuarios, token, expires) VALUES (?, ?, ?)', [userId, token, expires], (err) => {
-                if (err) return res.status(500).json({ success: false, message: 'Error al generar el token' });
-
-                const ipAddress = getServerIp();
-                const resetLink = `http://${ipAddress}:3000/resets?token=${token}`;
-
-                sendEmail(correo, 'Recuperación de Contraseña', `Haz clic en el siguiente enlace para recuperar tu contraseña: ${resetLink}`)
-                    .then(() => res.json({ success: true, message: 'Enlace de recuperación enviado a tu correo electrónico.' }))
-                    .catch((err) => res.status(500).json({ success: false, message: 'Error al enviar el correo' }));
+                if (err) return console.log('Error DB al generar token');
+                
+                const resetLink = `http://${getServerIp()}:3000/resets?token=${token}`;
+                sendEmail(correo, 'Recuperación de Contraseña', `Tu enlace de recuperación: ${resetLink}`).catch(console.error);
             });
-        } else {
-            res.status(404).json({ success: false, message: 'Correo electrónico no encontrado' });
         }
+        
+        // El response se manda INMEDIATAMENTE, sin importar si el correo se encontró o no
+        res.json(mensajeExito);
     });
 });
 
@@ -652,16 +655,22 @@ app.post('/resets', (req, res) => {
     const formattedDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
     conexion.query('SELECT * FROM password_resets WHERE token = ? AND expires > ?', [token, formattedDate], (error, results) => {
-        if (error) return res.status(500).send('Error al verificar el token');
+        if (error) return res.status(500).send('Error de base de datos');
 
         if (results.length > 0) {
             const userId = results[0].id_usuarios;
 
-            conexion.query('UPDATE usuarios SET contrasena = ? WHERE id_usuarios = ?', [contrasena, userId], (err) => {
-                if (err) return res.status(500).send('Error al actualizar la contraseña');
+            // Hashing seguro de la contraseña antes de guardarla (OWASP)
+            bcrypt.hash(contrasena, saltRounds, (err, hash) => {
+                if (err) return res.status(500).send('Error al encriptar');
 
-                conexion.query('DELETE FROM password_resets WHERE token = ?', [token], (deleteErr) => {
-                    res.send('Contraseña cambiada con éxito');
+                conexion.query('UPDATE usuarios SET contrasena = ? WHERE id_usuarios = ?', [hash, userId], (updateErr) => {
+                    if (updateErr) return res.status(500).send('Error al actualizar');
+
+                    // Destruimos el token para que no se pueda reusar
+                    conexion.query('DELETE FROM password_resets WHERE token = ?', [token], () => {
+                        res.send('Contraseña cambiada con éxito');
+                    });
                 });
             });
         } else {
